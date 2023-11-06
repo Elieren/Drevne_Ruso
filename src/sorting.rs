@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use crate::token::Token;
-use crate::shunting_yard::shunting_yard;
+use meval::eval_str;
 
 pub fn parser(tokens: Vec<Token>, variables: &mut HashMap<String, i32>) {
     let mut current_variable = String::new();
@@ -15,8 +15,7 @@ pub fn parser(tokens: Vec<Token>, variables: &mut HashMap<String, i32>) {
             }
             Token::EndOfLine => {
                 if is_assignment {
-                    let rpn = shunting_yard(expression.clone());
-                    let result = evaluate(rpn, variables);
+                    let result = evaluate(expression.clone(), variables);
                     variables.insert(current_variable.clone(), result);
                     is_assignment = false;
                 }
@@ -39,72 +38,53 @@ pub fn parser(tokens: Vec<Token>, variables: &mut HashMap<String, i32>) {
 }
 
 pub fn evaluate(tokens: Vec<Token>, variables: &HashMap<String, i32>) -> i32 {
-    let mut stack = Vec::new();
-    let mut x: bool = true;
+    let mut stack: String = String::new();
 
     for token in tokens {
         match token {
-            Token::Number(n) => if x {
-                stack.push(n);
-            } else {
-                stack.insert(0, n);
+            Token::Number(n) => {
+                let n: String = n.to_string();
+                stack.push_str(n.as_str());
             },
             Token::Variable(v) => {
                 if let Some(&value) = variables.get(&v) {
-                    stack.push(value);
+                    let value: String = value.to_string();
+                    stack.push_str(value.as_str());
                 } else {
                     panic!("Variable {} not defined", v);
                 }
             }
             Token::Plus => {
-                let rhs = stack[0];
-                stack.remove(0);
-                let lhs = stack[0];
-                stack.remove(0);
-                stack.insert(0, lhs + rhs);
-                x = false;
+                stack.push('+');
             }
             Token::Minus => {
-                let lhs = stack[0];
-                stack.remove(0);
-                let rhs = stack[0];
-                stack.remove(0);
-                stack.push(lhs - rhs);
-                x = false;
+                stack.push('-');
             }
             Token::Multiply => {
-                let rhs = stack[0];
-                stack.remove(0);
-                let lhs = stack[0];
-                stack.remove(0);
-                stack.push(lhs * rhs);
-                x = false;
+                stack.push('*');
             }
             Token::Divide => {
-                let lhs = stack[0];
-                stack.remove(0);
-                let rhs = stack[0];
-                stack.remove(0);
-                stack.push(lhs / rhs);
-                x = false;
+                stack.push('/');
             }
             Token::Exponentiation => {
-                let lhs = stack[0];
-                stack.remove(0);
-                let rhs = stack[0];
-                stack.remove(0);
-                stack.insert(0, lhs.pow(rhs as u32));
-                x = false;
+                stack.push('^');
             }
             Token::Sqrt => {
-                let n = stack[0];
-                stack.remove(0);
-                stack.insert(0, (n as f64).sqrt() as i32);
-                x = false;
+                stack.push_str("sqrt");
+            }
+            Token::OpenParenthesis => {
+                stack.push('(');
+            }
+            Token::CloseParenthesis => {
+                stack.push(')');
             }
             _ => {}
         }
     }
 
-    stack.pop().unwrap()
+    if let Ok(result) = eval_str(stack) {
+        result as i32
+    } else {
+        0
+    }
 }

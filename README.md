@@ -48,6 +48,6 @@ cargo build --release
 app.exe {Path to the code file}
 ```
 
-## Afterword
+## Fixed bugs
 
-__Bug with calculation of mathematical problems. In some examples it may give an incorrect answer.__
+[x] Bug with calculation of mathematical problems. In some examples it may give an incorrect answer.
