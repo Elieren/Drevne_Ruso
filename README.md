@@ -56,7 +56,7 @@ app.exe {Path to the code file}
 
 - [x] Mathematical operations
 - [x] Variables
-- [] Working with strings (addition, slicing)
-- [] Conditional statement (if-else)
+- [ ] Working with strings (addition, slicing)
+- [ ] Conditional statement (if-else)
 
 That's all for now
