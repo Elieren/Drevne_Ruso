@@ -7,13 +7,13 @@ mod token;
 mod sorting;
 
 fn main() {
-    // let args: Vec<String> = env::args().collect();
-    // if args.len() < 1 {
-    //     println!("Пожалуйста, укажите имя файла в качестве аргумента");
-    //     return;
-    // }
-    // let filename = &args[1];
-    let filename = "src\\drevnerus.dr";
+    let args: Vec<String> = env::args().collect();
+    if args.len() < 1 {
+        println!("Пожалуйста, укажите имя файла в качестве аргумента");
+        return;
+    }
+    let filename = &args[1];
+    // let filename = "src\\drevnerus.dr";
     let mut input = fs::read_to_string(filename)
         .expect("Не удалось прочитать файл");
 
