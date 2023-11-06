@@ -51,3 +51,12 @@ app.exe {Path to the code file}
 ## Fixed bugs
 
 - [x] Bug with calculation of mathematical problems. In some examples it may give an incorrect answer.
+
+## Features
+
+- [x] Mathematical operations
+- [x] Variables
+- [] Working with strings (addition, slicing)
+- [] Conditional statement (if-else)
+
+That's all for now
