@@ -18,10 +18,11 @@ pub fn parser(tokens: Vec<Token>, variables: &mut HashMap<String, i32>, variable
             }
             Token::EndOfLine => {
                 if is_assignment {
+                    // println!("{:?}", expression);
                     let result: TokenType;
                     let contains_string_var = expression.iter().any(|token| matches!(token, Token::StringVar(_)));
                     if contains_string_var {
-                        result = TokenType::String(evaluate_str(expression.clone()));
+                        result = TokenType::String(evaluate_str(expression.clone(), variables_string));
                     } else {
                         result = TokenType::Int(evaluate(expression.clone(), variables));
                     }
@@ -118,7 +119,7 @@ pub fn evaluate(tokens: Vec<Token>, variables: &HashMap<String, i32>) -> i32 {
 }
 
 // String
-pub fn evaluate_str(tokens: Vec<Token>) -> String {
+pub fn evaluate_str(tokens: Vec<Token>, variables_string: &mut HashMap<String, String>) -> String {
     let mut x: String = String::new();
     let mut z: bool = false;
     
@@ -132,6 +133,14 @@ pub fn evaluate_str(tokens: Vec<Token>) -> String {
                 }
             },
             Token::Plus => z = true,
+            Token::Variable(v) => {
+                let s: String = variables_string.get(&v).unwrap_or(&"None".to_string()).to_string();
+                if z {
+                    x.push_str(&s)
+                } else {
+                    x = String::from(&s)
+                }
+            }
             _ => {}
         }
     }

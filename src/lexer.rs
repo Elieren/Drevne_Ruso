@@ -66,8 +66,24 @@ pub fn lexer(input: &str) -> Vec<Token> {
                 }
             },
             _ if character.is_whitespace() => {
-                process_variable(&variable, &mut result);
-                variable.clear();
+
+                let first_char = match variable.chars().next() {
+                    Some(c) => c,
+                    None => '_'
+                };
+                let last_char = match variable.chars().last() {
+                    Some(c) => c,
+                    None => '_'
+                };
+                if !(first_char == '\'' || first_char == '\"') {
+                    process_variable(&variable, &mut result);
+                    variable.clear();
+                } else if (first_char == '\'' || first_char == '\"') && (last_char != first_char) {
+                    variable.push(' ')
+                } else if (first_char == '\'' && last_char == '\'') || (first_char == '\"' && last_char == '\"') {
+                    process_variable(&variable, &mut result);
+                    variable.clear();
+                }
             },
             _ => {
                 if recording {
