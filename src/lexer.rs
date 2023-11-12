@@ -1,5 +1,13 @@
 use crate::token::Token;
 
+pub fn check_quotes(s: &str) -> bool {
+    if s.len() < 2 {
+        return false;
+    }
+    let first_char = s.chars().next().unwrap();
+    let last_char = s.chars().last().unwrap();
+    (first_char == '\'' && last_char == '\'') || (first_char == '\"' && last_char == '\"')
+}
 
 pub fn process_variable(variable: &str, result: &mut Vec<Token>) {
     if !variable.is_empty() {
@@ -9,7 +17,9 @@ pub fn process_variable(variable: &str, result: &mut Vec<Token>) {
         } else if variable == "ВОДА_БАЙКАЛА" {
             result.push(Token::Print);
         } else if variable == "ЦАРЬ_БАТЮШКА" {
-
+        
+        } else if check_quotes(variable){
+            result.push(Token::StringVar(variable.to_string()));
         } else {
             result.push(Token::Variable(variable.to_string()));
         }

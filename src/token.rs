@@ -14,5 +14,12 @@ pub enum Token {
     Multiply,
     Divide,
     Exponentiation,
-    Sqrt
+    Sqrt,
+    StringVar(String)
+}
+
+
+pub enum TokenType {
+    Int(i32),
+    String(String)
 }

@@ -1,2 +1,3 @@
 /target
-/src/parser.rs
+/src/parser_old.rs
+.vscode
