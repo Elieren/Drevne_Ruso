@@ -8,7 +8,7 @@ mod parser;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    if args.len() < 1 {
+    if args.len() < 2 {
         println!("Пожалуйста, укажите имя файла в качестве аргумента");
         return;
     }

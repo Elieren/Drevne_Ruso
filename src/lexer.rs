@@ -50,6 +50,22 @@ pub fn lexer(input: &str) -> Vec<Token> {
                 }
                 result.push(Token::CloseParenthesis);
             },
+            '[' => {
+                process_variable(&variable, &mut result);
+                variable.clear();
+                result.push(Token::OpenBracket);
+            },
+            ']' => {
+                process_variable(&variable, &mut result);
+                variable.clear();
+                result.push(Token::CloseBracket);
+            },
+            ':' => {
+                process_variable(&variable, &mut result);
+                variable.clear();
+                result.push(Token::Colon);
+            },
+
             '+' | '-' | '=' | ';' | '*' | '/' | '^' | '√' => {
                 process_variable(&variable, &mut result);
                 variable.clear();

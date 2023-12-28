@@ -1,5 +1,6 @@
 #[derive(Debug)]
 #[derive(Clone)]
+#[derive(PartialEq)]
 pub enum Token {
     OpenParenthesis,
     CloseParenthesis,
@@ -15,10 +16,13 @@ pub enum Token {
     Divide,
     Exponentiation,
     Sqrt,
-    StringVar(String)
+    StringVar(String),
+    OpenBracket,
+    CloseBracket,
+    Colon
 }
 
-
+#[derive(Debug)]
 pub enum TokenType {
     Int(i32),
     String(String)

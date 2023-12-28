@@ -12,10 +12,19 @@
 "" - Straing
 ВОДА_БАЙКАЛА() - outputs a variable
 ЦАРЬ_БАТЮШКА() - Displays text in brackets (use _ instead of spaces)
+[:] - slicing (string)
 ```
 
 ## Example
 ```
+добрыня = "муромец красава";
+добрыня = добрыня[0:14];
+ВОДА_БАЙКАЛА(добрыня);
+
+добрыня = "муромец красава";
+добрыня = добрыня[0:14] + "_" + "Hi";
+ВОДА_БАЙКАЛА(добрыня);
+
 добрыня = "муромец красава";
 ВОДА_БАЙКАЛА(добрыня);
 добрыня = добрыня + "привет";
@@ -47,6 +56,8 @@
 
 ## Output in terminal
 ```
+муромец
+муромец_Hi
 муромец красава
 муромец красавапривет
 муромец_красава
@@ -81,7 +92,7 @@ app.exe {Path to the code file}
 
 - [x] Mathematical operations
 - [x] Variables
-- [ ] Working with strings ( [x] addition, [ ] slicing)
+- [x] Working with strings ( [x] addition, [x] slicing)
 - [ ] Conditional statement (if-else)
 
 That's all for now
